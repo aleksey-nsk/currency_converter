@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+    db:
+        image: 'postgres:13'
+        container_name: 'converter_dev_db'
+        ports:
+            - 15432:5432
+        environment:
+            - 'POSTGRES_DB=converter_dev'
+            - 'POSTGRES_USER=admin_dev'
+            - 'POSTGRES_PASSWORD=123'

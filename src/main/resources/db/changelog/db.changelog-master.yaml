@@ -1,0 +1,5 @@
+databaseChangeLog:
+    -   include:
+            file: db/changelog/01_table_currency.xml
+    -   include:
+            file: db/changelog/02_table_exchange_rate_by_rub.xml
