@@ -4,13 +4,20 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
-    <changeSet id="Create and fill table currency" author="Aleksey Zhdanov">
-        <createTable tableName="currency" remarks="Валюта">
+    <changeSet id="Create table exchange_rate" author="Aleksey Zhdanov">
+        <createTable tableName="exchange_rate">
             <column name="id" type="integer" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="currency_pk"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="exchange_rate_pk"/>
             </column>
-            <column name="id_cb" type="varchar(40)" remarks="Идентификатор ЦБ"/>
-            <column name="num_code" type="integer"/>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_cb" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="num_code" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
             <column name="char_code" type="varchar(40)">
                 <constraints nullable="false"/>
             </column>
@@ -20,13 +27,10 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="value" type="numeric">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
-
-        <insert tableName="currency">
-            <column name="char_code" value="RUB"/>
-            <column name="nominal" value="1"/>
-            <column name="name" value="Российский рубль"/>
-        </insert>
     </changeSet>
 
 </databaseChangeLog>
