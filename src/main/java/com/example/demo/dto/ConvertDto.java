@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -15,9 +18,18 @@ public class ConvertDto {
 
     private Long id;
     private Date date;
+
+    @NotNull
     private String fromValute;
+
+    @NotNull
+    @Min(0)
+    @Max(1_000_000_000)
     private BigDecimal amount;
+
+    @NotNull
     private String toValute;
+
     private BigDecimal rate;
     private BigDecimal result;
 
