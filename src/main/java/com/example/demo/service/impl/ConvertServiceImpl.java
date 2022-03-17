@@ -6,6 +6,7 @@ import com.example.demo.entity.ExchangeRate;
 import com.example.demo.repository.ConvertRepository;
 import com.example.demo.repository.ExchangeRateRepository;
 import com.example.demo.service.ConvertService;
+import com.example.demo.service.StatisticsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,13 @@ public class ConvertServiceImpl implements ConvertService {
 
     private final ConvertRepository convertRepository;
     private final ExchangeRateRepository exchangeRateRepository;
+    private final StatisticsService statisticsService;
 
     @Autowired
-    public ConvertServiceImpl(ConvertRepository convertRepository, ExchangeRateRepository exchangeRateRepository) {
+    public ConvertServiceImpl(ConvertRepository convertRepository, ExchangeRateRepository exchangeRateRepository, StatisticsService statisticsService) {
         this.convertRepository = convertRepository;
         this.exchangeRateRepository = exchangeRateRepository;
+        this.statisticsService = statisticsService;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class ConvertServiceImpl implements ConvertService {
         BigDecimal valueFrom = from.getValue();
         Integer nominalTo = to.getNominal();
         BigDecimal valueTo = to.getValue();
-        BigDecimal rate = (BigDecimal.valueOf(nominalTo).multiply(valueFrom)).divide(BigDecimal.valueOf(nominalFrom).multiply(valueTo), 2, ROUND_HALF_UP);
+        BigDecimal rate = (BigDecimal.valueOf(nominalTo).multiply(valueFrom)).divide(BigDecimal.valueOf(nominalFrom).multiply(valueTo), 4, ROUND_HALF_UP);
         log.debug("  курс: " + rate);
 
         BigDecimal result = convert.getAmount().multiply(rate);
@@ -71,6 +74,11 @@ public class ConvertServiceImpl implements ConvertService {
 
         Convert saved = convertRepository.save(convert);
         log.debug("  saved: " + saved);
+
+        // Используем Copy Constructor
+        Convert copy = new Convert(saved);
+        statisticsService.update(copy);
+
         return ConvertDto.valueOf(saved);
     }
 }

@@ -37,4 +37,25 @@ public class Convert {
 
     @Column(name = "result")
     private BigDecimal result;
+
+    /**
+     * <strong>Copy Constructor</strong>
+     *
+     * <p>Long - immutable type</p>
+     * <p>String - immutable type</p>
+     * <p>BigDecimal - immutable type</p>
+     *
+     * <p>Date - mutable</p>
+     *
+     * @param convert Объект для копирования
+     */
+    public Convert(Convert convert) {
+        this.id = convert.getId();
+        this.date = new Date(convert.getDate().getTime());
+        this.fromValute = convert.getFromValute();
+        this.amount = convert.getAmount();
+        this.toValute = convert.getToValute();
+        this.rate = convert.getRate();
+        this.result = convert.getResult();
+    }
 }

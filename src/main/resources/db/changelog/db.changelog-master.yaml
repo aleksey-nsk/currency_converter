@@ -3,3 +3,5 @@ databaseChangeLog:
             file: db/changelog/01_table_exchange_rate.xml
     -   include:
             file: db/changelog/02_table_convert.xml
+    -   include:
+            file: db/changelog/03_table_statistics.xml
