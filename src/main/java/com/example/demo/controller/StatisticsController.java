@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.StatisticsDto;
 import com.example.demo.service.StatisticsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/statistics")
+@Tag(name = "Контроллер для статистики")
 public class StatisticsController {
 
     private final StatisticsService statisticsService;
@@ -24,6 +27,7 @@ public class StatisticsController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Получить всю статистику")
     public List<StatisticsDto> findAll() {
         return statisticsService.findAll();
     }

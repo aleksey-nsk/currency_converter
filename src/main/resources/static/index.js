@@ -10,7 +10,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     };
 
     $scope.getCurrentRate = function () {
-        const url = contextPath + '/currentRate';
+        const url = contextPath + '/rate';
         console.log("Method getCurrentRate(), url: " + url);
         $http.get(url)
                 .then(function (resp) {
