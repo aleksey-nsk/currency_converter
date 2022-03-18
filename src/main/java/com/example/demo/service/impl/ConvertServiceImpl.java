@@ -1,7 +1,6 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.ConvertDto;
-import com.example.demo.util.ConvertDtoComparator;
 import com.example.demo.entity.Convert;
 import com.example.demo.entity.ExchangeRate;
 import com.example.demo.exception.ExchangeRateNotFoundException;
@@ -11,12 +10,15 @@ import com.example.demo.service.ConvertService;
 import com.example.demo.service.StatisticsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.math.BigDecimal.ROUND_HALF_UP;
 
@@ -35,16 +37,20 @@ public class ConvertServiceImpl implements ConvertService {
         this.statisticsService = statisticsService;
     }
 
-    @Override
-    public List<ConvertDto> findAll() {
-        List<ConvertDto> list = convertRepository.findAll()
-                .stream()
-                .map(it -> ConvertDto.valueOf(it))
-                .sorted(new ConvertDtoComparator())
-                .collect(Collectors.toList());
+    private final static int PAGE_SIZE = 4;
 
-        log.debug("Список всех конвертаций: " + list);
-        return list;
+    @Override
+    public Page<ConvertDto> findConvertPage(Integer pageIndex) {
+        log.debug("Получить страницу с конвертациями");
+        log.debug("  номер страницы: " + pageIndex);
+
+        Pageable pageable = PageRequest.of(pageIndex - 1, PAGE_SIZE, Sort.by("id").descending());
+        Page<ConvertDto> page = convertRepository.findAll(pageable).map(it -> ConvertDto.valueOf(it));
+        List<ConvertDto> content = page.getContent();
+
+        log.debug("  список конвертаций на искомой странице: " + content);
+        log.debug("  всего конвертаций на странице: " + content.size());
+        return page;
     }
 
     @Override

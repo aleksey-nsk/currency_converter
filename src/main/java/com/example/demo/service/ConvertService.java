@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ConvertDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 /**
  * @author Aleksey Zhdanov
@@ -11,11 +10,12 @@ import java.util.List;
 public interface ConvertService {
 
     /**
-     * <p>Возвращает список всех конвертаций</p>
+     * <p>Возвращает страницу с конвертациями</p>
      *
-     * @return Список конвертаций
+     * @param pageIndex Номер страницы
+     * @return Страница с конвертациями
      */
-    List<ConvertDto> findAll();
+    Page<ConvertDto> findConvertPage(Integer pageIndex);
 
     /**
      * <p>Добавляет новую конвертацию в историю</p>

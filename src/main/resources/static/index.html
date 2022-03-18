@@ -22,7 +22,7 @@
 
     <div>
         <br/>
-        <h3>Конвертировать</h3>
+        <h3><font color="#3cb371">Конвертировать</font></h3>
         <form novalidate ng-submit="doConvert()">
             <div class="form-group row">
                 <div class="form-group col-md-3">
@@ -70,7 +70,7 @@
 
     <div>
         <br/>
-        <h3>История</h3>
+        <h3><font color="#1e90ff">История</font></h3>
         <table class="table table-hover" cellpadding="0" cellspacing="0">
             <thead>
             <tr>
@@ -83,7 +83,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="convert in Converts">
+            <tr ng-repeat="convert in ConvertPage.content">
                 <td>{{convert.date | date:'d MMM yyyy'}}</td>
                 <td>{{convert.fromValute}}</td>
                 <td>{{convert.amount}}</td>
@@ -93,11 +93,27 @@
             </tr>
             </tbody>
         </table>
+
+        <!-- Пагинация -->
+        <nav aria-label="Convert history navigation">
+            <ul class="pagination">
+                <li ng-class="ConvertPage.first ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" ng-click="getConvertPage(ConvertPage.number)">Пред.</a>
+                </li>
+                <li ng-class="ConvertPage.number == pageIndex - 1 ? 'page-item active' : 'page-item'"
+                    ng-repeat="pageIndex in PaginationArray">
+                    <a class="page-link" ng-click="getConvertPage(pageIndex)">{{pageIndex}}</a>
+                </li>
+                <li ng-class="ConvertPage.last ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" ng-click="getConvertPage(ConvertPage.number + 2)">След.</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <div>
         <br/>
-        <h3>Статистика</h3>
+        <h3><font color="#ffa07a">Статистика</font></h3>
         <table class="table table-hover" cellpadding="0" cellspacing="0">
             <thead>
             <tr>

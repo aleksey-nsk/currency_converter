@@ -18,13 +18,40 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 });
     };
 
-    $scope.getConvert = function () {
+    $scope.generatePageIndexes = function (startPage, endPage) {
+        console.log("Method generatePageIndexes(), startPage=" + startPage + ", endPage=" + endPage);
+        let arr = [];
+        for (let i = startPage; i <= endPage; i++) {
+            arr.push(i);
+        }
+        return arr;
+    };
+
+    $scope.getConvertPage = function (pageIndex = 1) {
         const url = contextPath + '/convert';
         console.log("Method getConvert(), url: " + url);
-        $http.get(url)
-                .then(function (resp) {
-                    $scope.Converts = resp.data;
-                });
+
+        $http({
+            url: url,
+            method: 'GET',
+            params: {
+                pageIndex: pageIndex
+            }
+        }).then(function (response) {
+            $scope.ConvertPage = response.data;
+
+            let minPageIndex = pageIndex - 2;
+            if (minPageIndex < 1) {
+                minPageIndex = 1;
+            }
+
+            let maxPageIndex = pageIndex + 2;
+            if (maxPageIndex > $scope.ConvertPage.totalPages) {
+                maxPageIndex = $scope.ConvertPage.totalPages;
+            }
+
+            $scope.PaginationArray = $scope.generatePageIndexes(minPageIndex, maxPageIndex);
+        });
     };
 
     $scope.getStatistics = function () {
@@ -38,7 +65,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
     $scope.fillPage = function () {
         $scope.getCurrentRate();
-        $scope.getConvert();
+        $scope.getConvertPage();
         $scope.getStatistics();
     };
 
