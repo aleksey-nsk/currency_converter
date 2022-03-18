@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/statistics")
-@Tag(name = "Контроллер для статистики")
+@Tag(name = "Статистика")
 public class StatisticsController {
 
     private final StatisticsService statisticsService;
@@ -27,7 +27,7 @@ public class StatisticsController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Получить всю статистику")
+    @Operation(summary = "Получить всю статистику по конвертациям")
     public List<StatisticsDto> findAll() {
         return statisticsService.findAll();
     }

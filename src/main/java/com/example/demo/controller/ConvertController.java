@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/convert")
-@Tag(name = "Контроллер для конвертаций")
+@Tag(name = "Конвертация валют")
 public class ConvertController {
 
     private final ConvertService convertService;

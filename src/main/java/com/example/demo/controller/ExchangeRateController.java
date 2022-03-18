@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/rate")
-@Tag(name = "Контроллер для обменного курса")
+@Tag(name = "Обменный курс")
 public class ExchangeRateController {
 
     private final ExchangeRateService exchangeRateService;
