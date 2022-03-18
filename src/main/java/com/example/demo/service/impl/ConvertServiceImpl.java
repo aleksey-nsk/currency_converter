@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.dto.ConvertDto;
 import com.example.demo.entity.Convert;
 import com.example.demo.entity.ExchangeRate;
+import com.example.demo.exception.ExchangeRateNotFoundException;
 import com.example.demo.repository.ConvertRepository;
 import com.example.demo.repository.ExchangeRateRepository;
 import com.example.demo.service.ConvertService;
@@ -50,9 +51,11 @@ public class ConvertServiceImpl implements ConvertService {
         log.debug("  convertDto: " + convertDto);
 
         Convert convert = convertDto.mapToConvert();
+        String fromValute = convert.getFromValute();
+        String toValute = convert.getToValute();
         Date currentDate = new Date();
-        ExchangeRate from = exchangeRateRepository.findFirstByNameAndDate(convert.getFromValute(), currentDate);
-        ExchangeRate to = exchangeRateRepository.findFirstByNameAndDate(convert.getToValute(), currentDate);
+        ExchangeRate from = exchangeRateRepository.findFirstByNameAndDate(fromValute, currentDate).orElseThrow(() -> new ExchangeRateNotFoundException(fromValute, currentDate));
+        ExchangeRate to = exchangeRateRepository.findFirstByNameAndDate(toValute, currentDate).orElseThrow(() -> new ExchangeRateNotFoundException(toValute, currentDate));
         log.debug("  from: " + from);
         log.debug("  to: " + to);
 

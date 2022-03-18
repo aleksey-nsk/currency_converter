@@ -12,6 +12,14 @@ import java.util.UUID;
 @Log4j2
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(ExchangeRateNotFoundException.class)
+    public ResponseEntity<Object> handleEntityNotFound(RuntimeException e) {
+        String message = "Entity not found: " + e.getMessage();
+        log.error(message);
+        Response response = new Response(message);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<Object> handleUnhandledExceptions(Throwable t) {
         String exceptionUuid = UUID.randomUUID().toString();
