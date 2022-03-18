@@ -5,10 +5,13 @@ import com.example.demo.entity.ExchangeRate;
 import com.example.demo.repository.ExchangeRateRepository;
 import com.example.demo.service.ExchangeRateService;
 import com.example.demo.util.CBUtil;
+import com.example.demo.util.ExchangeRateComparator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,10 +37,33 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
 
         if (currentRate.size() == 0) {
             log.debug("В БД отсутствует список обменных курсов на текущую дату: " + currentDate);
+
+            // Получить список из ЦБ
             List<ExchangeRate> listFromCB = CBUtil.getCurrentRate(currentDate);
-            exchangeRateRepository.saveAll(listFromCB); // сохранить весь список из ЦБ в БД
-            log.debug("В БД сохранён список: " + listFromCB);
-            currentRate = listFromCB.stream()
+
+            // Добавить в список российский рубль
+            ExchangeRate rusRUB = new ExchangeRate();
+            rusRUB.setDate(currentDate);
+            rusRUB.setCharCode("RUR");
+            rusRUB.setNominal(1);
+            rusRUB.setName("Российский рубль");
+            rusRUB.setValue(BigDecimal.ONE);
+            List<ExchangeRate> listWithRUB = new ArrayList<>(listFromCB);
+            listWithRUB.add(rusRUB);
+            log.debug("Список с российским рублём: " + listWithRUB);
+
+            // Отсортировать список по названиям валют
+            List<ExchangeRate> finalList = listWithRUB.stream()
+                    .sorted(new ExchangeRateComparator())
+                    .collect(Collectors.toList());
+            log.debug("Итоговый отсортированный список для сохранения: " + finalList);
+
+            // Сохранить список в БД
+            exchangeRateRepository.saveAll(finalList);
+            log.debug("В БД сохранён список: " + finalList);
+
+            // Преобразовать в DTO
+            currentRate = finalList.stream()
                     .map(it -> ExchangeRateDto.valueOf(it))
                     .collect(Collectors.toList());
         }

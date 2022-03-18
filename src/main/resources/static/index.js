@@ -29,7 +29,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
     $scope.getConvertPage = function (pageIndex = 1) {
         const url = contextPath + '/convert';
-        console.log("Method getConvert(), url: " + url);
+        console.log("Method getConvertPage(), url: " + url);
 
         $http({
             url: url,

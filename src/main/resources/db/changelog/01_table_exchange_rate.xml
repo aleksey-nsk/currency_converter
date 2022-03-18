@@ -12,12 +12,8 @@
             <column name="date" type="date">
                 <constraints nullable="false"/>
             </column>
-            <column name="id_cb" type="varchar(40)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="num_code" type="varchar(40)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="id_cb" type="varchar(40)"/>
+            <column name="num_code" type="varchar(40)"/>
             <column name="char_code" type="varchar(40)">
                 <constraints nullable="false"/>
             </column>
