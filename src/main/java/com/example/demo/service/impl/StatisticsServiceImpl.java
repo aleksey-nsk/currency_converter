@@ -5,6 +5,7 @@ import com.example.demo.entity.Convert;
 import com.example.demo.entity.Statistics;
 import com.example.demo.repository.StatisticsRepository;
 import com.example.demo.service.StatisticsService;
+import com.example.demo.util.StatisticsDtoComparator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         List<StatisticsDto> list = statisticsRepository.findAll()
                 .stream()
                 .map(it -> StatisticsDto.valueOf(it))
+                .sorted(new StatisticsDtoComparator())
                 .collect(Collectors.toList());
 
         log.debug("Вся статистика: " + list);

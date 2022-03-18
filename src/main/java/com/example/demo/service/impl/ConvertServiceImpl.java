@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.ConvertDto;
+import com.example.demo.util.ConvertDtoComparator;
 import com.example.demo.entity.Convert;
 import com.example.demo.entity.ExchangeRate;
 import com.example.demo.exception.ExchangeRateNotFoundException;
@@ -39,6 +40,7 @@ public class ConvertServiceImpl implements ConvertService {
         List<ConvertDto> list = convertRepository.findAll()
                 .stream()
                 .map(it -> ConvertDto.valueOf(it))
+                .sorted(new ConvertDtoComparator())
                 .collect(Collectors.toList());
 
         log.debug("Список всех конвертаций: " + list);
