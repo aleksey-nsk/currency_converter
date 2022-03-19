@@ -9,7 +9,7 @@
 в файле src/main/resources/**application-dev.yaml**. Для миграций используем **Liquibase**.
 
 4. Для тестирования используем **in-memory базу данных H2**. Настройки test-профиля прописываем  
-в файле src/main/resources/**application-test.yaml**. Тесты (**интеграционные** и **unit**) создаём
+в файле src/main/resources/**application-test.yaml**. Тесты (**интеграционные** и **unit**) создаём  
 в директории **src/test/java**.
 
 5. Документацию к API генерируем с помощью **Swagger**. Для просмотра документации открыть адрес:
@@ -45,7 +45,8 @@
 6. Создать в корне проекта файл **build_and_push.sh** с содержимым:  
 ![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/03_build_and_push.png)  
 
-7. Запустим файл **build_and_push.sh**. Будут созданы образы для бэкенда и фронтенда, и загружены на **Docker Hub**:  
+7. Запустим файл **build_and_push.sh**. Будут созданы образы для бэкенда и фронтенда,  
+и загружены на **Docker Hub**:  
 ![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/04_create_images.png)  
 ![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/05_docker_hub.png)  
 
@@ -73,5 +74,6 @@
 ![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/09_docker_compose_down.png)  
 ![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/10_watch_containers.png)  
 
-7. Если нужно удалить и **том (volume) с данными**, тогда выполните команду `docker-compose down --volume`, в итоге:  
+7. Если нужно удалить и **том (volume) с данными**, тогда выполните  
+команду `docker-compose down --volume`, в итоге:  
 ![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/11_volume_deleted.png)  
