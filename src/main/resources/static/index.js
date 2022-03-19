@@ -1,6 +1,6 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
 
-    const contextPath = 'http://localhost:8082/api/v1';
+    const contextPath = 'http://localhost:8082/api/v1'; // dev-профиль
     console.log("contextPath: " + contextPath);
 
     $scope.getCurrentRate = function () {

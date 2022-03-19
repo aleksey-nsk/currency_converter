@@ -42,3 +42,4 @@ build/
 
 # Other
 /.attach_*
+/prod_create/services/backend/demo-0.0.1-SNAPSHOT.jar

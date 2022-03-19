@@ -34,32 +34,47 @@
        - Базу данных PostgreSQL
        - AngularJS-фронтенд на сервере Nginx
 
-2. Создаём файл application-prod.yaml для настройки prod-профиля. Также в файле application.yaml
-указываем в качестве активного профиль prod.
+2. Создаём файл src/main/resources/**application-prod.yaml** для настройки prod-профиля.
+Также в файле src/main/resources/**application.yaml** указываем в качестве активного профиль prod.
 
-3. Далее создать конфигурационный
-файл src/main/java/com/example/bank_api/config/CorsConfig.java для настройки CORS.
+3. Далее создаём конфигурационный файл src/main/java/com/example/demo/config/**CorsConfig.java** для настройки **CORS**.
 
-4. В корне проекта создать папку prod
+4. В корне проекта создать папку **prod_create** с такой структурой:  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/02_prod_create.png)  
 
-5. В файле index.js меняем базовый урл (порт 8083)
+5. Файлы для фронтенда скопировать в директорию prod_create/services/frontend/**html**, и при этом
+поменять `contextPath` в js-файле.
 
-6. Выполнить команду mvn clean package и далее созданный jar-файл скопировать
-из папки target в папку prod/services/backend.
+6. Создать в корне проекта файл **build_and_push.sh** с содержимым:  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/03_build_and_push.png)  
 
-7. Файл prod/docker-compose.yaml имеет вид такой-то.
+7. Запустим файл **build_and_push.sh**. Будут созданы образы для бэкенда и фронтенда, и загружены на **Docker Hub**:  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/04_create_images.png)  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/05_docker_hub.png)  
 
-8. Для каждого сервиса указан свой Dockerfile (файл для сборки образа).
+# Как запустить приложение
 
-9. Попробую образы на Докер Хаб залить.
+1. Файл для запуска **prod_ready/docker-compose.yaml** выглядит так:  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/06_file_for_run.png)  
 
+2. Возьмите машину, на которой установлены **Docker** и утилита **docker-compose**. Скопируйте на эту машину
+файл **prod_ready/docker-compose.yaml**. Далее откройте в терминале папку с этим файлом и выполните
+команду `docker-compose up --build`. После этого скачаются нужные образы, создадутся контейнеры, и затем
+приложение будет запущено:  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/07_images_and_containers.png)  
 
+3. Приложение доступно в браузере по адресу:
+- http://localhost:8080/
 
+4. Документация к API доступна по адресу:
+- http://localhost:8083/swagger-ui/index.html
 
+5. Чтобы остановить приложение, нажмите в консоли `Ctrl + C`. Контейнеры будут остановлены:  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/08_stop_app.png)  
 
+6. Чтобы удалить контейнеры, выполните команду `docker-compose down`. В результате контейнеры будут удалены:  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/09_docker_compose_down.png)  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/10_watch_containers.png)  
 
-9. Есть машина, на которой установлены Docker и утилита docker-compose. Копируем
-на эту машину всю папку prod и открываем её в терминале. Далее выполняем
-команду docker-compose up --build и видим, что скачиваются нужные образы и
-создаются контейнеры.
-
+7. Если нужно удалить и **том (volume) с данными**, тогда выполните команду `docker-compose down --volume`, в итоге:  
+![](https://github.com/aleksey-nsk/currency_converter/blob/master/screenshots/11_volume_deleted.png)  
