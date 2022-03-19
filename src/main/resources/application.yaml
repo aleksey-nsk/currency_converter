@@ -1,4 +1,5 @@
 # Задаём активный профиль
 spring:
     profiles:
-        active: dev
+        active: prod
+#        active: dev
