@@ -33,12 +33,4 @@ public class Statistics {
 
     @Column(name = "sum_convert")
     private BigDecimal sumConvert;
-
-    public Statistics(String fromValute, String toValute, Integer amountConvert, BigDecimal averageRate, BigDecimal sumConvert) {
-        this.fromValute = fromValute;
-        this.toValute = toValute;
-        this.amountConvert = amountConvert;
-        this.averageRate = averageRate;
-        this.sumConvert = sumConvert;
-    }
 }

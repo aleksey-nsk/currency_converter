@@ -55,8 +55,14 @@ public class StatisticsServiceImpl implements StatisticsService {
         log.debug("  statisticsCurrent: " + statisticsCurrent);
 
         if (statisticsCurrent == null) {
-            Statistics statistics = new Statistics(fromValute, toValute, 1, rate, result);
+            Statistics statistics = new Statistics();
+            statistics.setFromValute(fromValute);
+            statistics.setToValute(toValute);
+            statistics.setAmountConvert(1);
+            statistics.setAverageRate(rate);
+            statistics.setSumConvert(result);
             log.debug("  сохранить новую запись: " + statistics);
+
             Statistics saved = statisticsRepository.save(statistics);
             log.debug("  в БД сохранена новая запись: " + saved);
             return;
