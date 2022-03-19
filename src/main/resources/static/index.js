@@ -3,12 +3,6 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     const contextPath = 'http://localhost:8082/api/v1';
     console.log("contextPath: " + contextPath);
 
-    $scope.logout = function () {
-        const url = '/logout';
-        console.log("Method logout(), url: " + url);
-        $http.get(url);
-    };
-
     $scope.getCurrentRate = function () {
         const url = contextPath + '/rate';
         console.log("Method getCurrentRate(), url: " + url);
